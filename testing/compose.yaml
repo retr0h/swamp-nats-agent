@@ -1,0 +1,26 @@
+# Local dev harness for swamp-nats-agent.
+#
+# Runs NATS with JetStream enabled so the agent can auto-create:
+#   - SWAMP_AGENT stream         (agent request capture, 24h retention)
+#   - SWAMP_AGENT_DLQ stream     (dead-letter envelopes, 7d retention)
+#   - swamp-agent-files bucket   (Object Store for file transfers)
+#
+# The agent itself runs on the host via `deno task dev` so edits reload
+# instantly. See ./README.md for the full workflow.
+
+name: swamp-nats-agent-dev
+
+services:
+  nats:
+    image: nats:2-alpine
+    container_name: swamp-nats-dev
+    command: ["-c", "/etc/nats/nats.conf"]
+    ports:
+      - "4222:4222" # client protocol
+      - "8222:8222" # monitoring
+    volumes:
+      - ./nats.conf:/etc/nats/nats.conf:ro
+      - nats-jetstream:/data
+
+volumes:
+  nats-jetstream:
