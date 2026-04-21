@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ready:
+    name: deno task ready
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Cache Deno dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/deno
+          key: deno-${{ runner.os }}-${{ hashFiles('deno.lock', 'deno.json') }}
+          restore-keys: |
+            deno-${{ runner.os }}-
+
+      # Runs: fmt, lint, check, protocol-sync, test.
+      # The protocol-sync step skips (not fails) when ../swamp-nats/ is
+      # absent — it's only enforced in local dev where both repos are
+      # checked out side-by-side.
+      - name: deno task ready
+        run: deno task ready
+
+  compile:
+    name: deno task compile
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Cache Deno dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/deno
+          key: deno-${{ runner.os }}-${{ hashFiles('deno.lock', 'deno.json') }}
+          restore-keys: |
+            deno-${{ runner.os }}-
+
+      - name: Cross-compile all targets
+        run: deno task compile
+
+      - name: Binary listing
+        run: ls -la bin/
