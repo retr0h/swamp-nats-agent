@@ -1,6 +1,2 @@
 bin/
 *.log
-
-# Swamp runtime — any swamp CLI invocation while cwd is this repo drops
-# state into .swamp/ (SQLite catalogs, bundle cache, etc). Not ours.
-.swamp/
