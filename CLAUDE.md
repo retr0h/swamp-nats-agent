@@ -16,9 +16,6 @@ conventions for working in this repo.
 - All code must pass type checking with `deno check`
 - All code must pass `deno lint`
 - Format all code with `deno fmt`
-- All `.ts` files must include the AGPLv3 copyright header from `FILE-LICENSE-TEMPLATE.md` at the
-  top of the file (as `//` comments). Run `deno task license-headers` to add headers to any new
-  files.
 - No fire-and-forget promises. Every promise must be awaited or explicitly handled — unhandled
   promises race with `Deno.exit` and silently lose data. For outbound network calls, pass an
   `AbortSignal` with a timeout so the caller controls cancellation.
@@ -37,7 +34,6 @@ Use `deno task` to see the full list. Common ones:
 - `deno task fmt` — format
 - `deno task fmt:check` — check formatting (must pass before committing)
 - `deno task compile` — cross-compile binaries into `./bin/` for linux/darwin × x86_64/aarch64
-- `deno task license-headers` — add AGPL headers to any new `.ts` files
 
 ## Architecture
 

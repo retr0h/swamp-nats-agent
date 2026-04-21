@@ -1,7 +1,7 @@
 {
   "name": "@retr0h/swamp-nats-agent",
   "version": "0.1.0",
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "exports": "./main.ts",
   "tasks": {
     "dev": "deno run --allow-read --allow-write --allow-env --allow-run --allow-net --allow-sys main.ts",
@@ -11,10 +11,10 @@
     "fmt": "deno fmt",
     "fmt:check": "deno fmt --check",
     "compile": "deno run -A scripts/compile.ts",
-    "license-headers": "deno run --allow-read --allow-write scripts/add_license_headers.ts",
     "vendor-protocol": "deno run --allow-read --allow-write scripts/vendor_protocol.ts",
     "check-protocol-sync": "deno run --allow-read scripts/check_protocol_sync.ts",
-    "ready": "deno task fmt && deno task lint && deno task check && deno task check-protocol-sync && deno task test"
+    "ready": "deno task fmt && deno task lint && deno task check && deno task check-protocol-sync && deno task test",
+    "ready:ci": "deno task fmt:check && deno task lint && deno task check && deno task check-protocol-sync && deno task test"
   },
   "imports": {
     "@cliffy/command": "jsr:@cliffy/command@1",
