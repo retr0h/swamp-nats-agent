@@ -1,5 +1,6 @@
 bin/
 *.log
 
-# Swamp runtime (if the agent dir ever gets used as a swamp repo during dev)
+# Swamp runtime — any swamp CLI invocation while cwd is this repo drops
+# state into .swamp/ (SQLite catalogs, bundle cache, etc). Not ours.
 .swamp/
